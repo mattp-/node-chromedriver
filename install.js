@@ -160,20 +160,13 @@ function extractDownload(filePath, tmpPath) {
 
   console.log('Extracting zip contents');
   try {
-    if (process.env.CHROMEDRIVER_UNZIP_PRG) {
-      cp.execFile(process.env.CHROMEDRIVER_UNZIP_PRG, ['-o', '-d', tmpPath, filePath], function(err, out, code) {
-        console.log(out);
-        if (err) {
-          console.log(err);
-        }
-        deferred.resolve(true);
-      });
-    }
-    else {
-      var zip = new AdmZip(filePath);
-      zip.extractAllTo(tmpPath, true);
+    cp.execFile(process.env.CHROMEDRIVER_UNZIP_PRG, ['-o', '-d', tmpPath, filePath], function(err, out, code) {
+      console.log(out);
+      if (err) {
+        console.log(err);
+      }
       deferred.resolve(true);
-    }
+    });
   } catch (err) {
     deferred.reject('Error extracting archive ' + err.stack);
   }
