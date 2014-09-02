@@ -1,6 +1,5 @@
 'use strict'
 
-var AdmZip = require('adm-zip')
 var cp = require('child_process')
 var fs = require('fs')
 var helper = require('./lib/chromedriver')
@@ -160,7 +159,9 @@ function extractDownload(filePath, tmpPath) {
 
   console.log('Extracting zip contents');
   try {
-    cp.execFile(process.env.CHROMEDRIVER_UNZIP_PRG, ['-o', '-d', tmpPath, filePath], function(err, out, code) {
+    var unzip_prg = process.env.CHROMEDRIVER_UNZIP_PRG || '/usr/bin/unzip';
+
+    cp.execFile(unzip_prg, ['-o', '-d', tmpPath, filePath], function(err, out, code) {
       console.log(out);
       if (err) {
         console.log(err);
